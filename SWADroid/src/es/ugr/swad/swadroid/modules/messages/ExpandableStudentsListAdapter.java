@@ -149,7 +149,7 @@ public class ExpandableStudentsListAdapter extends BaseExpandableListAdapter{
             }
         });
 
-
+//Comentario 
         // If user has no photo, show default photo
         if (photoFileName == null) {
             bMap = BitmapFactory.decodeStream(image.getResources().openRawResource(R.raw.usr_bl));
