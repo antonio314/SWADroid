@@ -18,6 +18,18 @@
  */
 package es.ugr.swad.swadroid.database;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -45,22 +57,9 @@ import es.ugr.swad.swadroid.model.TestAnswer;
 import es.ugr.swad.swadroid.model.TestQuestion;
 import es.ugr.swad.swadroid.model.TestTag;
 import es.ugr.swad.swadroid.model.User;
-import es.ugr.swad.swadroid.modules.rollcall.students.StudentItemModel;
 import es.ugr.swad.swadroid.utils.Crypto;
 import es.ugr.swad.swadroid.utils.OldCrypto;
 import es.ugr.swad.swadroid.utils.Utils;
-
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Juan Miguel Boyero Corral <juanmi1982@gmail.com>
@@ -293,7 +292,6 @@ public class DataBaseHelper {
                     crypto.decrypt(ent.getString("userFirstname")),
                     crypto.decrypt(ent.getString("photoPath")),
                     ent.getInt("userRole"));
-            Log.d("lista" ,crypto.decrypt(ent.getString("userSurname1")).toString()+" "+crypto.decrypt(ent.getString("userSurname2")).toString()+","+crypto.decrypt(ent.getString("userFirstname")).toString());
         } else if (table.equals(Constants.DB_TABLE_GROUPS)) {
             long groupTypeCode = getGroupTypeCodeFromGroup(ent.getLong("id"));
             o = new Group(ent.getLong("id"),

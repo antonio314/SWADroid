@@ -127,7 +127,8 @@ public class Messages extends Module {
     private void writeData() {
         EditText rcv = (EditText) findViewById(R.id.message_receivers_text);
         rcv.setText(receivers);
-
+        rcv.setSelection(rcv.length());
+        
         EditText subj = (EditText) findViewById(R.id.message_subject_text);
         subj.setText(subject);
 

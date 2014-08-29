@@ -3,36 +3,24 @@ package es.ugr.swad.swadroid.modules.messages;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-import es.ugr.swad.swadroid.Constants;
 import es.ugr.swad.swadroid.R;
-import es.ugr.swad.swadroid.model.Model;
 import es.ugr.swad.swadroid.model.User;
 import es.ugr.swad.swadroid.modules.rollcall.students.StudentItemModel;
-import es.ugr.swad.swadroid.utils.Utils;
 
 /**
  * Custom ExpandableListAdapter for display users at Messages
@@ -47,7 +35,7 @@ public class ExpandableStudentsListAdapter extends BaseExpandableListAdapter{
 	private LayoutInflater minflater;
 	private Activity activity;
 	
-	private int widthScale, heightScale, bMapScaledWidth, bMapScaledHeight;
+	//private int widthScale, heightScale, bMapScaledWidth, bMapScaledHeight;
 
 	
 	
@@ -131,7 +119,7 @@ public class ExpandableStudentsListAdapter extends BaseExpandableListAdapter{
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 
-        Bitmap bMap = null;
+        //Bitmap bMap = null;
 
         final User u = (User) childItem.get(groupPosition).get(childPosition);
         
@@ -159,15 +147,18 @@ public class ExpandableStudentsListAdapter extends BaseExpandableListAdapter{
             }
         });
         // Calculate the dimensions of the screen to resize the photos
-        Display display = ((WindowManager) activity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        //Display display = ((WindowManager) activity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         
         
-        //If the user photo exists and is public, download and show it. Else, show a default pfoto
-        if (Utils.connectionAvailable(activity)
+        //If the user photo exists and is public, download and show it. On error show a default pfoto
+        /*if (Utils.connectionAvailable(activity)
                 && (photoFileName != null) && !photoFileName.equals("")
-                && !photoFileName.equals(Constants.NULL_VALUE)) {
+                && !photoFileName.equals(Constants.NULL_VALUE)) {*/
 
-        	DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).build();
+        	DisplayImageOptions options = new DisplayImageOptions.Builder()
+        								.showImageForEmptyUri(R.raw.usr_bl)
+        								.showImageOnFail(R.raw.usr_bl)
+        								.cacheInMemory(true).build();
         	
 			ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(activity.getApplicationContext())
 			            					.defaultDisplayImageOptions(options).build();
@@ -183,7 +174,7 @@ public class ExpandableStudentsListAdapter extends BaseExpandableListAdapter{
             LinearLayout.LayoutParams params = new LayoutParams(bMapScaledWidth, bMapScaledHeight);
             image.setLayoutParams(params);*/
             
-        } 
+        /*} 
         else {
             Log.d("ExpLVStudentList", "No connection or no photo " + photoFileName);
             bMap = BitmapFactory.decodeStream(image.getResources().openRawResource(R.raw.usr_bl));
@@ -197,7 +188,7 @@ public class ExpandableStudentsListAdapter extends BaseExpandableListAdapter{
             Bitmap bMapScaled = Bitmap.createScaledBitmap(bMap, bMapScaledWidth, bMapScaledHeight, true);
             image.setImageBitmap(bMapScaled);            
            
-        }
+        }*/
 
         text.setText(fullName);
         text.setTag(u.getUserNickname());
