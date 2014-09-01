@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import es.ugr.swad.swadroid.Constants;
 import es.ugr.swad.swadroid.R;
 import es.ugr.swad.swadroid.model.Test;
@@ -123,11 +122,14 @@ public class TestsConfigDownload extends Module {
                 Test tDB = (Test) dbHelper.getRow(Constants.DB_TABLE_TEST_CONFIG, "id",
                         Long.toString(Constants.getSelectedCourseCode()));
 
-                //If not exists a test configuration for this course, insert to database
-                if (tDB == null) {
-                    Test t = new Test(Constants.getSelectedCourseCode(), minQuestions, defQuestions, maxQuestions, feedback, System.currentTimeMillis() / 1000L);
-                    dbHelper.insertTestConfig(t);
+                //If exists a test configuration for this course, remove from database
+                if (tDB != null) {
+                	dbHelper.removeRow(Constants.DB_TABLE_TEST_CONFIG, Constants.getSelectedCourseCode());
+                	Log.i(TAG, "Removed old test configuration for course " + Constants.getSelectedCourseFullName());
                 }
+                
+                Test t = new Test(Constants.getSelectedCourseCode(), minQuestions, defQuestions, maxQuestions, feedback, System.currentTimeMillis() / 1000L);
+                dbHelper.insertTestConfig(t);
 
                 if (isDebuggable) {
                     Log.d(TAG, "minQuestions=" + minQuestions);
@@ -162,7 +164,7 @@ public class TestsConfigDownload extends Module {
      */
     @Override
     protected void postConnect() {
-        if (numQuestions == 0) {
+        if (isPluggable && (numQuestions == 0)) {
             Toast.makeText(this, R.string.noQuestionsAvailableTestsDownloadMsg, Toast.LENGTH_LONG).show();
         } else if (!isPluggable) {
             Toast.makeText(this, R.string.noQuestionsPluggableTestsDownloadMsg, Toast.LENGTH_LONG).show();

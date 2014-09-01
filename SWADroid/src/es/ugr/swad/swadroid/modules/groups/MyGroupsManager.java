@@ -204,7 +204,6 @@ public class MyGroupsManager extends MenuExpandableListActivity {
     private void showConfirmEnrollmentDialog() {
     	OnClickListener positiveClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
                 String myGroups = ((EnrollmentExpandableListAdapter) mExpandableListView.getExpandableListAdapter()).getChosenGroupCodesAsString();
                 Intent activity = new Intent(getApplicationContext(), SendMyGroups.class);
                 activity.putExtra("courseCode", courseCode);
@@ -213,12 +212,13 @@ public class MyGroupsManager extends MenuExpandableListActivity {
             }
         };
         
-    	AlertDialog dialog = DialogFactory.createPositiveNegativeDialog(this,
+    	AlertDialog dialog = DialogFactory.createWarningDialog(this,
     			-1,
     			R.string.confirmEnrollments,
-    			R.string.areYouSure,
+    			R.string.areYouSureGroups,
     			R.string.yesMsg,
     			R.string.noMsg,
+    			false,
     			positiveClickListener,
     			cancelClickListener,
     			null);

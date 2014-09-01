@@ -62,6 +62,8 @@ import es.ugr.swad.swadroid.utils.OldCrypto;
 import es.ugr.swad.swadroid.utils.Utils;
 
 /**
+ * Helper for database operations
+ * 
  * @author Juan Miguel Boyero Corral <juanmi1982@gmail.com>
  * @author Antonio Aguilera Malagon <aguilerin@gmail.com>
  * @author Helena Rodriguez Gijon <hrgijon@gmail.com>
