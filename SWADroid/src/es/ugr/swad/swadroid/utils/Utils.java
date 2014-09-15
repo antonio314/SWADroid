@@ -163,7 +163,7 @@ public class Utils {
         }
     }
 
-    private static boolean isHTTPUrl(String url) {
+    public static boolean isHTTPUrl(String url) {
         return url.startsWith("http://");
     }
 
